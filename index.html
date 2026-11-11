@@ -326,18 +326,15 @@ function erikFig(){ // generic friend in a hoodie, holding a mug
   <path d="M-25,-210 C-24,-240 24,-240 25,-210 C12,-222 -12,-222 -25,-210Z" fill="#3d3024" stroke="${B}" stroke-width="1.5"/>
   <circle cx="-8" cy="-208" r="2.6" fill="${B}"/><circle cx="8" cy="-208" r="2.6" fill="${B}"/>
   <path d="M-9,-195 Q0,-186 9,-195" fill="none" stroke="${B}" stroke-width="2.2" stroke-linecap="round"/>`}
-function carEV(withBen=true){ // origin: ground centre, facing right
+function carEV(withBen=true){ // photo cut-out of a white Kia EV6 (ev6.webp). origin: ground centre, facing right
+  const img=`<image href="ev6.webp" x="-132" y="-91.4" width="264" height="91.74" preserveAspectRatio="none"/>`,W=[[-82.4,-21.5],[89.6,-21.6]];
   return `
-  <path d="M-132,-24 C-136,-46 -128,-56 -112,-60 C-94,-82 -60,-94 -20,-94 C16,-94 42,-82 64,-62 L112,-52 C128,-48 136,-38 132,-24Z" fill="${B}" stroke="#12285f" stroke-width="3"/>
-  <path d="M-98,-62 C-84,-78 -56,-86 -20,-86 C8,-86 30,-78 50,-62Z" fill="${PALE}" stroke="#12285f" stroke-width="2"/>
-  ${withBen?`<g transform="translate(12,-60) scale(.42)">${benHead()}</g>`:""}
-  <line x1="-22" y1="-86" x2="-22" y2="-62" stroke="#12285f" stroke-width="4"/>
-  <path d="M-132,-24 L132,-24 L128,-16 L-128,-16Z" fill="#12285f"/>
-  <path d="M-22,-62 L-22,-22 M56,-60 L60,-22" stroke="#12285f" stroke-width="1.5" opacity=".6"/>
-  <rect x="-132" y="-52" width="10" height="5" fill="${RED}"/><path d="M118,-46 L132,-40 L130,-34 L116,-40Z" fill="#ffe9a8" stroke="#12285f"/>
-  <text x="14" y="-34" text-anchor="middle" style="font-size:13px;fill:${PALE};letter-spacing:.12em">EV6</text>
-  <path d="M-106,-18 A26,26 0 0 1 -54,-18Z M52,-18 A26,26 0 0 1 104,-18Z" fill="#12285f"/>
-  ${[-80,78].map(x=>`<g transform="translate(${x},-20)"><circle r="20" fill="#222b45" stroke="#12285f" stroke-width="3"/><g class="spin"><circle r="11" fill="${PALE}"/><path d="M-11,0H11M0,-11V11M-8,-8L8,8M-8,8L8,-8" stroke="#12285f" stroke-width="2"/></g></g>`).join("")}`}
+  <defs><clipPath id="evWin"><polygon points="-12,-82 11,-83 36,-67 46,-61.5 -12,-63"/></clipPath>
+  ${W.map(([x,y],i)=>`<clipPath id="evW${i}"><circle cx="${x}" cy="${y}" r="21.1"/></clipPath>`).join("")}</defs>
+  <ellipse cx="0" cy="0" rx="126" ry="5" fill="#12285f" opacity=".28"/>
+  ${img}
+  ${withBen?`<g clip-path="url(#evWin)"><g transform="translate(13,-61.5) scale(.34)">${benHead()}</g></g>`:""}
+  ${W.map(([x,y],i)=>`<g transform="translate(${x},${y})"><g class="spin"><g transform="translate(${-x},${-y})" clip-path="url(#evW${i})">${img}</g></g></g>`).join("")}`}
 function otherCar(kind,col){
   if(kind===1)return `<rect x="-58" y="-74" width="100" height="62" rx="6" fill="${col}" stroke="${B}" stroke-width="2.5"/><path d="M42,-52 L60,-46 L62,-12 L42,-12Z" fill="${col}" stroke="${B}" stroke-width="2.5"/>
     <rect x="-46" y="-64" width="26" height="18" fill="#fff" stroke="${B}"/><rect x="-10" y="-64" width="26" height="18" fill="#fff" stroke="${B}"/><rect x="-58" y="-50" width="4" height="8" fill="${RED}"/>
